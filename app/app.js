@@ -4,11 +4,13 @@ interact with DOM
 interact with localstorage
 
  */
+//add a way to input name
+//add a way to input value
+//make it look nice
 
 $(document).ready(function(){
   // this is where we jquery
   //var keyData = 'ourKey'; // going to need to make this dynamic?
-
 
   $('.btn-add').on('click', function(e){
     console.log(e);
@@ -23,7 +25,7 @@ $(document).ready(function(){
     // <div class="display-data-item" data-keyValue="keyData">valueData</div>
     // if you use backticks ` you can use ${templateLiterals}
     // TODO make this vars make sense across the app
-    $('.container-data').html('<div class="display-data-item" data-keyValue="'+ keyData +'">'+valueData+'</div>');
+    $('<ul class="display-data-item" data-keyValue="'+ keyData +'">'+keyData+ " "+ "$" +valueData+'<div class="deleteMe">X</div></ul>').appendTo('.container-data');
     $('.input-key').val('');
     $('.input-value').val('');
   });
@@ -34,11 +36,11 @@ $(document).ready(function(){
 
   // delete item
   $('.container-data').on('click', '.display-data-item', function(e){
-    console.log(e.currentTarget.dataset.keyvalue);
-    var keyData = e.currentTarget.dataset.keyvalue;
-    localStorage.removeItem(keyData);
-    $('.container-data').text('');
+    $(".deleteMe").on("click", function(){
+      $(this).closest("ul").remove();
+   });
   });
+
   // delete all?
   $('.btn-clear').click(function(){
     localStorage.clear();
@@ -46,3 +48,4 @@ $(document).ready(function(){
   });
 
 });
+
