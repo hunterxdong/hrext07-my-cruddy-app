@@ -17,6 +17,14 @@ $(document).ready(function(){
     var keyData = $('.input-key').val();
     var valueData = $('.input-value').val();
     // write to db
+    if(valueData===''){
+      alert('Please input a number');
+      return false;
+    }
+    if(keyData===''){
+      alert('Please input a name');
+      return false;
+    }
     localStorage.setItem(keyData, valueData);
     // read from db
     var displayText = keyData + ' | ' + localStorage.getItem(keyData);
@@ -26,8 +34,10 @@ $(document).ready(function(){
     // if you use backticks ` you can use ${templateLiterals}
     // TODO make this vars make sense across the app
     $('<ul class="display-data-item" data-keyValue="'+ keyData +'">'+keyData+ " "+ "$" +valueData+'<div class="deleteMe">X</div></ul>').appendTo('.container-data');
+    $(".total").html(parseInt($(".total").html())+parseInt(valueData))
     $('.input-key').val('');
     $('.input-value').val('');
+
   });
 
 
@@ -36,15 +46,20 @@ $(document).ready(function(){
 
   // delete item
   $('.container-data').on('click', '.display-data-item', function(e){
-    $(".deleteMe").on("click", function(){
-      $(this).closest("ul").remove();
-   });
+    console.log(e);
+    var keyData = e.currentTarget.dataset.keyvalue;
+    $(".total").html(parseInt($(".total").html())-parseInt(localStorage.getItem(keyData)));
+    $(this).closest("ul").remove();
+    var audio = document.getElementsByTagName("audio")[0];
+    audio.play();
   });
 
   // delete all?
   $('.btn-clear').click(function(){
+    alert("please enter credit card info");
     localStorage.clear();
     $('.container-data').text('');
+    $(".total").html(parseInt($(".total").html())*0)
   });
 
 });
